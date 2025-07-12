@@ -30,7 +30,7 @@ Presupuesto Inteligente es una aplicación web desarrollada con Angular que ayud
 1. Clonar el repositorio:
 ```bash
 git clone https://github.com/Presupuesto-App/presupuesto-frontend
-cd presupuesto-inteligente-frontend
+cd presupuesto-frontend
 ```
 
 2. Instalar dependencias:
