@@ -1,0 +1,92 @@
+<div class="container">
+  <mat-card class="resultados-card animate-fade-in">
+    <mat-card-header>
+      <mat-card-title>Tu Presupuesto Inteligente</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content *ngIf="presupuesto && presupuesto.subcategorias">
+      <!-- Gráfico circular -->
+      <div class="chart-section">
+        <h2 class="section-title">Distribución recomendada</h2>
+        <div class="chart-container">
+          <canvas baseChart
+            [type]="pieChartType"
+            [options]="pieChartOptions"
+            [data]="pieChartData">
+          </canvas>
+        </div>
+      </div>
+
+      <mat-divider class="section-divider"></mat-divider>
+
+      <!-- Tabla con Mat-Table -->
+      <div class="table-section">
+        <h2 class="section-title">Detalle de presupuesto</h2>
+
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z2 full-width">
+          <!-- Columna Nombre -->
+          <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef> Categoría </th>
+            <td mat-cell *matCellDef="let elemento"> {{elemento.nombre}} </td>
+            <td mat-footer-cell *matFooterCellDef> <strong>Total</strong> </td>
+          </ng-container>
+
+          <!-- Columna Porcentaje -->
+          <ng-container matColumnDef="porcentaje">
+            <th mat-header-cell *matHeaderCellDef class="text-center"> Porcentaje </th>
+            <td mat-cell *matCellDef="let elemento" class="text-center"> {{elemento.porcentaje | number:'1.0-1'}}% </td>
+            <td mat-footer-cell *matFooterCellDef class="text-center"> 100% </td>
+          </ng-container>
+
+          <!-- Columna Monto -->
+          <ng-container matColumnDef="monto">
+            <th mat-header-cell *matHeaderCellDef class="text-right"> Monto </th>
+            <td mat-cell *matCellDef="let elemento" class="text-right"> ${{elemento.monto | number:'1.0-1'}} </td>
+            <td mat-footer-cell *matFooterCellDef class="text-right total-amount">
+              <strong>${{calcularTotal() | number:'1.0-1'}}</strong>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+        </table>
+      </div>
+
+      <mat-divider class="section-divider"></mat-divider>
+
+      <!-- Recomendaciones -->
+      <div class="recomendaciones-section">
+        <mat-card class="recomendaciones-card">
+          <mat-card-header>
+            <mat-card-title>Recomendaciones</mat-card-title>
+            <mat-icon mat-card-avatar>lightbulb</mat-icon>
+          </mat-card-header>
+          <mat-card-content>
+            <p>
+              Este presupuesto está basado en tus respuestas y sigue buenas prácticas financieras.
+              Recuerda que la clave para una buena salud financiera es ser consistente con tu presupuesto y
+              revisar periódicamente tus gastos para asegurar que estás siguiendo el plan.
+            </p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-card-content>
+
+    <!-- Mensaje si no hay datos -->
+    <mat-card-content *ngIf="!presupuesto || !presupuesto.subcategorias" class="empty-state">
+      <mat-icon class="empty-icon">info</mat-icon>
+      <p class="empty-text">No se encontraron resultados disponibles.</p>
+    </mat-card-content>
+
+    <!-- Botón para volver -->
+    <mat-card-actions>
+      <div class="button-container">
+        <button mat-raised-button color="primary" (click)="volverAPreguntas()">
+          <mat-icon>arrow_back</mat-icon>
+          Volver a las preguntas
+        </button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</div>

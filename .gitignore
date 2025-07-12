@@ -1,4 +1,4 @@
-# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+# See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # Compiled output
 /dist
@@ -19,14 +19,12 @@ yarn-error.log
 *.launch
 .settings/
 *.sublime-workspace
-
-# Visual Studio Code
+*.iml
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-.history/*
 
 # Miscellaneous
 /.angular/cache
@@ -40,3 +38,7 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Environment variables - descomentar si contienen información sensible
+# /src/environments/environment.ts
+# /src/environments/environment.prod.ts

@@ -1,0 +1,12 @@
+<mat-toolbar color="primary" class="navbar">
+  <span class="app-title">Presupuesto Inteligente</span>
+  <span class="spacer"></span>
+
+  <ng-container *ngIf="isLoggedIn()">
+    <button mat-button (click)="onSignOut()" class="signout-button">
+      <mat-icon>exit_to_app</mat-icon>
+      Cerrar Sesión
+    </button>
+  </ng-container>
+</mat-toolbar>
+

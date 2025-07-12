@@ -1,0 +1,74 @@
+<div class="container">
+  <mat-card class="register-card animate-fade-in">
+    <mat-card-header>
+      <mat-card-title>Crea tu cuenta</mat-card-title>
+      <mat-card-subtitle>Regístrate para comenzar a usar Presupuesto Inteligente</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="form-fields-container">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Nombre de usuario</mat-label>
+            <input matInput formControlName="username" placeholder="Elige un nombre de usuario" required>
+            <mat-icon matPrefix>person</mat-icon>
+            <mat-error *ngIf="registerForm.controls['username'].invalid && registerForm.controls['username'].touched">
+              Usuario requerido
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Correo electrónico</mat-label>
+            <input matInput formControlName="email" placeholder="tu@correo.com" required type="email">
+            <mat-icon matPrefix>email</mat-icon>
+            <mat-error *ngIf="registerForm.controls['email'].invalid && registerForm.controls['email'].touched">
+              Ingresa un correo electrónico válido
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Contraseña</mat-label>
+            <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password"
+                   placeholder="Mínimo 6 caracteres" required>
+            <mat-icon matPrefix>lock</mat-icon>
+            <button type="button" mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+              <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error *ngIf="registerForm.controls['password'].invalid && registerForm.controls['password'].touched">
+              La contraseña debe tener al menos 6 caracteres
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Confirmar contraseña</mat-label>
+            <input matInput [type]="hideConfirmPassword ? 'password' : 'text'" formControlName="confirmPassword"
+                   placeholder="Repite tu contraseña" required>
+            <mat-icon matPrefix>lock</mat-icon>
+            <button type="button" mat-icon-button matSuffix (click)="hideConfirmPassword = !hideConfirmPassword">
+              <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error *ngIf="registerForm.hasError('mismatch') && registerForm.controls['confirmPassword'].touched">
+              Las contraseñas no coinciden
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="button-container">
+          <button mat-raised-button color="primary" type="submit" [disabled]="isLoading" class="full-width">
+            <mat-spinner *ngIf="isLoading" diameter="20" class="register-spinner"></mat-spinner>
+            <span *ngIf="!isLoading">Crear cuenta</span>
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <div class="login-link">
+        <span>¿Ya tienes una cuenta?</span>
+        <button mat-button color="primary" (click)="navigateToLogin()">
+          Inicia sesión
+        </button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</div>

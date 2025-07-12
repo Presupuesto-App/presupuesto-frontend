@@ -1,0 +1,122 @@
+<div class="container">
+  <mat-card class="preguntas-card animate-fade-in">
+    <mat-card-header>
+      <mat-card-title>Presupuesto Inteligente</mat-card-title>
+      <mat-card-subtitle>Cuéntanos sobre tu situación financiera</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="preguntasForm" (ngSubmit)="onSubmit()">
+        <mat-vertical-stepper linear="false" #stepper>
+          <!-- Sueldo mensual -->
+          <mat-step label="Información de ingresos">
+            <div class="step-content">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>¿Cuál es tu sueldo mensual?</mat-label>
+                <input matInput type="number" formControlName="sueldoMensual" placeholder="0.00" min="0">
+                <span matPrefix>$&nbsp;</span>
+                <mat-icon matSuffix>attach_money</mat-icon>
+                <mat-error *ngIf="preguntasForm.controls['sueldoMensual'].invalid">
+                  Ingresa un valor válido para tu sueldo mensual
+                </mat-error>
+              </mat-form-field>
+
+              <div class="stepper-buttons">
+                <button mat-button matStepperNext type="button">Siguiente</button>
+              </div>
+            </div>
+          </mat-step>
+
+          <!-- Tipo de vivienda -->
+          <mat-step label="Información de vivienda">
+            <div class="step-content">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>¿Cuál es tu situación de vivienda?</mat-label>
+                <mat-select formControlName="tipoVivienda" required>
+                  <mat-option *ngFor="let tipo of tiposVivienda" [value]="tipo.valor">
+                    {{tipo.etiqueta}}
+                  </mat-option>
+                </mat-select>
+                <mat-icon matSuffix>home</mat-icon>
+                <mat-error *ngIf="preguntasForm.controls['tipoVivienda'].invalid">
+                  Selecciona tu situación de vivienda
+                </mat-error>
+              </mat-form-field>
+
+              <div class="checkbox-group">
+                <mat-checkbox formControlName="viveSolo" color="primary">
+                  ¿Vives solo?
+                </mat-checkbox>
+              </div>
+
+              <div class="checkbox-group">
+                <mat-checkbox formControlName="tieneHijos" color="primary">
+                  ¿Tienes hijos?
+                </mat-checkbox>
+              </div>
+
+              <div class="stepper-buttons">
+                <button mat-button matStepperPrevious type="button">Atrás</button>
+                <button mat-button matStepperNext type="button">Siguiente</button>
+              </div>
+            </div>
+          </mat-step>
+
+          <!-- Información de gastos -->
+          <mat-step label="Información de gastos">
+            <div class="step-content">
+              <div class="checkbox-group">
+                <mat-checkbox formControlName="usaCarro" color="primary">
+                  ¿Utilizas carro regularmente?
+                </mat-checkbox>
+              </div>
+
+              <div class="radio-group-container">
+                <h3 class="radio-group-label">¿Con qué frecuencia comes fuera de casa?</h3>
+                <mat-radio-group formControlName="comidasFueraFrecuencia" class="radio-group">
+                  <mat-radio-button *ngFor="let opcion of frecuenciaComidas" [value]="opcion.valor">
+                    {{opcion.etiqueta}}
+                  </mat-radio-button>
+                </mat-radio-group>
+              </div>
+
+              <div class="stepper-buttons">
+                <button mat-button matStepperPrevious type="button">Atrás</button>
+                <button mat-button matStepperNext type="button">Siguiente</button>
+              </div>
+            </div>
+          </mat-step>
+
+          <!-- Información financiera adicional -->
+          <mat-step label="Información financiera">
+            <div class="step-content">
+              <div class="checkbox-group">
+                <mat-checkbox formControlName="tieneMetaAhorro" color="primary">
+                  ¿Tienes alguna meta de ahorro?
+                </mat-checkbox>
+              </div>
+
+              <div class="checkbox-group">
+                <mat-checkbox formControlName="tieneDeudas" color="primary">
+                  ¿Tienes deudas que pagar actualmente?
+                </mat-checkbox>
+              </div>
+
+              <div class="stepper-buttons">
+                <button mat-button matStepperPrevious type="button">Atrás</button>
+              </div>
+            </div>
+          </mat-step>
+        </mat-vertical-stepper>
+
+        <!-- Botón de envío -->
+        <div class="submit-button-container">
+          <button mat-raised-button color="primary" type="submit" [disabled]="preguntasForm.invalid || isLoading">
+            <mat-spinner *ngIf="isLoading" diameter="20" class="button-spinner"></mat-spinner>
+            <span *ngIf="!isLoading">Generar mi presupuesto</span>
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
